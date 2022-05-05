@@ -1,12 +1,16 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const connectDataBase = require('./configuration/database/connection-database');
 
-var app = express();
+const app = express();
+
+// Connect to MySQL Database
+connectDataBase();
 
 app.set('view engine', 'ejs');
 
