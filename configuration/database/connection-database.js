@@ -1,18 +1,23 @@
-function connectDataBase() {
-  const mysql = require("mysql");
-  const environment = require("../environment");
-
-  console.log('environment.database', environment);
-
-  const connection = mysql.createConnection(environment.module.database);
-  connection.connect();
-
-  connection.query("SHOW DATABASES;", function (error, results) {
-    if (error) throw error;
-    console.log("The solution is: ", results[0]);
-  });
-
-  connection.end();
+const _connection = {
+  connect:  () => {
+    const mysql = require("mysql");
+    const environment = require("../environment");
+  
+    const connectionPool = mysql.createPool(environment.module.database);
+  
+    connectionPool.query("SHOW DATABASES;", function (error) {
+      if (error) throw error
+       else console.log("Correct ConnectionPool to DB :)");
+    });
+    _connection.pool = connectionPool;
+  },
+  pool: null,
+  close: () => {
+    _connection.pool.end();
+    _connection.pool.destroy();
+  }
 }
 
-module.exports = connectDataBase;
+
+
+module.exports = _connection;

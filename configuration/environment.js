@@ -4,7 +4,8 @@ const environment = {
         port: 3306,
         name: 'bjvujnsydnppgijm8a5i',
         user: 'uxvz6basoexmy4vu',
-        password: 'q9vvX4n9eM2YHRT7KS7r'
+        password: 'q9vvX4n9eM2YHRT7KS7r',
+        database: 'bjvujnsydnppgijm8a5i',
     }
 }
 
