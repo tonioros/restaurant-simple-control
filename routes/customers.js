@@ -9,8 +9,8 @@ router
     db.pool.getConnection(function (err, connection) {
       if (err) throw err; // not connected!
       connection.query(
-        "SELECT ID, nombre, apellido, cedula, email, telefono, "+
-        "creation_date FROM Clientes LIMIT 1000;",
+        "SELECT ID, nombre, apellido, cedula, email, telefono, " +
+          "creation_date FROM Clientes LIMIT 1000;",
         (error, results) => {
           if (error) throw error; // not connected!
           connection.release();
@@ -19,14 +19,14 @@ router
       );
     });
   })
-/* Insert new Tables. */
+  /* Insert new Tables. */
   .post((req, res) => {
     const insertValues = {
-        nombre: req.body.nombre,
-        apellido: req.body.apellido,
-        cedula: req.body.cedula,
-        email: req.body.email,
-        telefono: req.body.telefono
+      nombre: req.body.nombre,
+      apellido: req.body.apellido,
+      cedula: req.body.cedula,
+      email: req.body.email,
+      telefono: req.body.telefono,
     };
     db.pool.getConnection(function (err, connection) {
       if (err) throw err; // not connected!
@@ -37,7 +37,7 @@ router
         (error, results) => {
           if (error) throw error;
           connection.release();
-          res.json({insertId: results.insertId});
+          res.json({ insertId: results.insertId });
         }
       );
     });
@@ -50,20 +50,23 @@ router
     const ID = req.params.id;
 
     db.pool.getConnection(function (err, connection) {
-        if (err) throw err; // not connected!
+      if (err) throw err; // not connected!
 
-        connection.query(
-          "SELECT ID, nombre, apellido, cedula, email, telefono, creation_date "+
-          "FROM Clientes WHERE ID = " + ID + " LIMIT 1;",
-          (error, results) => {
-            if (error) throw error; // not connected!
-            connection.release();
-            res.json(results[0]);
-          }
-        );
-      });
+      connection.query(
+        "SELECT ID, nombre, apellido, cedula, email, telefono, creation_date " +
+          "FROM Clientes WHERE ID = " +
+          ID +
+          " LIMIT 1;",
+        (error, results) => {
+          if (error) throw error; // not connected!
+          connection.release();
+          if (results.lenght > 0) res.json(results[0]);
+          else res.json({}).status(404);
+        }
+      );
+    });
   })
-/* Delete One Table. */
+  /* Delete One Table. */
   .delete((req, res) => {
     const ID = req.params.id;
     db.pool.getConnection(function (err, connection) {
@@ -72,7 +75,7 @@ router
         (error, results) => {
           if (error) throw error;
           connection.release();
-          res.json({affectedRows: results.affectedRows});
+          res.json({ affectedRows: results.affectedRows });
         }
       );
     });

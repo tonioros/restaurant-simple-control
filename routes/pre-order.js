@@ -53,7 +53,8 @@ router.route("/:id").get((req, res) => {
       (error, results) => {
         if (error) throw error; // not connected!
         connection.release();
-        res.json(results[0]);
+        if (results.lenght > 0) res.json(results[0]);
+        else res.json({}).status(404);
       }
     );
   });

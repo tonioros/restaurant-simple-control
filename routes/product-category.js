@@ -13,7 +13,8 @@ router
         (error, results) => {
           if (error) throw error; // not connected!
           connection.release();
-          res.json(results);
+          if (results.lenght > 0) res.json(results[0]);
+          else res.json({}).status(404);
         }
       );
     });

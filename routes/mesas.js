@@ -18,11 +18,11 @@ router
       );
     });
   })
-/* Insert new Tables. */
+  /* Insert new Tables. */
   .post((req, res) => {
     const insertValues = {
       nombre_mesa: req.body.nombre_mesa,
-      habilitada: (req.body.habilitada ? 1 : 0)
+      habilitada: req.body.habilitada ? 1 : 0,
     };
     db.pool.getConnection(function (err, connection) {
       if (err) throw err; // not connected!
@@ -46,19 +46,20 @@ router
     const ID = req.params.id;
 
     db.pool.getConnection(function (err, connection) {
-        if (err) throw err; // not connected!
+      if (err) throw err; // not connected!
 
-        connection.query(
-          "SELECT ID, nombre_mesa, habilitada FROM Mesas WHERE ID = " + ID,
-          (error, results) => {
-            if (error) throw error; // not connected!
-            connection.release();
-            res.json(results[0]);
-          }
-        );
-      });
+      connection.query(
+        "SELECT ID, nombre_mesa, habilitada FROM Mesas WHERE ID = " + ID,
+        (error, results) => {
+          if (error) throw error; // not connected!
+          connection.release();
+          if (results.lenght > 0) res.json(results[0]);
+          else res.json({}).status(404);
+        }
+      );
+    });
   })
-/* Delete One Table. */
+  /* Delete One Table. */
   .delete((req, res) => {
     const ID = req.params.id;
     db.pool.getConnection(function (err, connection) {
@@ -67,7 +68,7 @@ router
         (error, results) => {
           if (error) throw error;
           connection.release();
-          res.json({affectedRows: results.affectedRows});
+          res.json({ affectedRows: results.affectedRows });
         }
       );
     });

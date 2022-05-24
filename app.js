@@ -10,6 +10,7 @@ const customerRouter = require('./routes/customers');
 const orderTypeRouter = require('./routes/order-type');
 const prodCategoryRouter = require('./routes/product-category');
 const preOrderRouter = require('./routes/pre-order');
+const productsRouter = require('./routes/products');
 const connectDataBase = require('./configuration/database/connection-database');
 
 const app = express();
@@ -33,5 +34,6 @@ app.use('/customers', customerRouter);
 app.use('/order-type', orderTypeRouter);
 app.use('/product-category', prodCategoryRouter);
 app.use('/pre-order', preOrderRouter);
+app.use('/products', productsRouter);
 
 module.exports = app;
