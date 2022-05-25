@@ -6,7 +6,7 @@ function whereBuilder(nombre = null, ID = null, pageNumber = 0) {
   let whereCategoryID = "";
 
   if (nombre) {
-    whereCategoryID = `${whereCategoryID} WHERE nombre LIKE '${nombre}' `;
+    whereCategoryID = `${whereCategoryID} WHERE nombre LIKE '%${nombre}%' `;
   }
 
   if (ID && !isNaN(Number(categoriaId))) {
@@ -22,6 +22,7 @@ router
   .get((req, res) => {
     const searchNombre = req.query.nombre;
     const whereStatement = whereBuilder(searchNombre);
+    console.log(whereStatement)
     db.pool.getConnection(function (err, connection) {
       if (err) throw err; // not connected!
       connection.query(
