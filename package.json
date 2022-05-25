@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www 0.0.0.0 8080",
-    "start-simple": "node ./bin/www"
+    "start-simple": "node ./bin/www",
+    "test": "mocha ./test/customers.test.js"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -12,9 +13,11 @@
     "ejs": "^3.1.7",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
+    "mocha": "^10.0.0",
     "mongoose": "^6.2.10",
     "morgan": "~1.9.1",
     "mysql": "^2.18.1",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "supertest": "^6.2.3"
   }
 }
