@@ -2,15 +2,31 @@ const express = require("express");
 const router = express.Router();
 const db = require("../configuration/database/connection-database");
 
+function whereBuilder(nombre = null, ID = null, pageNumber = 0) {
+  let whereCategoryID = "";
+
+  if (nombre) {
+    whereCategoryID = `${whereCategoryID} WHERE nombre LIKE '${nombre}' `;
+  }
+
+  if (ID && !isNaN(Number(categoriaId))) {
+    whereCategoryID = `${whereCategoryID} WHERE ID = ${Number(ID)} `;
+  }
+
+  return whereCategoryID;
+}
+
 /* GET All Resources. */
 router
   .route("/")
   .get((req, res) => {
+    const searchNombre = req.query.nombre;
+    const whereStatement = whereBuilder(searchNombre);
     db.pool.getConnection(function (err, connection) {
       if (err) throw err; // not connected!
       connection.query(
         "SELECT ID, nombre, apellido, cedula, email, telefono, " +
-          "creation_date FROM Clientes LIMIT 1000;",
+          `creation_date FROM Clientes ${whereStatement} LIMIT 1000;`,
         (error, results) => {
           if (error) throw error; // not connected!
           connection.release();
